@@ -1,4 +1,4 @@
-// ✅ V5 — نسخة محدثة: تفعيل التواصل + meta tags + scroll CTA
+// ✅ V5.6 — شعار ALKREDI مصغّر بدون التأثير على Hero أو اللغة - كود كامل 100%
 'use client';
 
 import { useState, Suspense } from 'react';
@@ -53,7 +53,6 @@ export default function Home() {
   const [lang, setLang] = useState<'de' | 'en'>('de');
   const [darkMode, setDarkMode] = useState(false);
   const t = translations[lang];
-
   const icons = [<Wand2 size={20} />, <Code2 size={20} />, <Bot size={20} />];
 
   const fadeUp = {
@@ -79,11 +78,11 @@ export default function Home() {
         )}
       </div>
 
-      <div className="fixed top-8 left-8 flex gap-1 z-50">
+      <div className="fixed top-8 left-8 flex gap-1 z-50 scale-[0.85] md:scale-100">
         {nameSquares.map((char, i) => (
           <div
             key={i}
-            className={`w-9 h-9 md:w-10 md:h-10 rounded-[4px] shadow flex items-center justify-center text-lg md:text-xl font-extrabold tracking-wide ${i === 0 ? 'bg-[repeating-linear-gradient(135deg,_#ffffff_0px,_#ffffff_2px,_#000000_2px,_#000000_4px)] text-black' : 'bg-white text-black'}`}
+            className={`w-6 h-6 md:w-7 md:h-7 rounded-[3px] shadow flex items-center justify-center text-lg md:text-xl font-extrabold tracking-wide ${i === 0 ? 'bg-[repeating-linear-gradient(135deg,_#ffffff_0px,_#ffffff_2px,_#000000_2px,_#000000_4px)] text-black' : 'bg-white text-black'}`}
           >
             {char}
           </div>
