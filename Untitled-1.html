@@ -1,0 +1,147 @@
+// ✅ نسخة الكود بعد التصليح النهائي لتناسب الدارك مود + تعليقات تفصيلية للمبتدئين
+// كل مكان يوجد فيه لون خط، تمت الإشارة إليه، مع شرح واضح لكيفية تغييره
+
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+
+// ✅ النصوص المترجمة حسب اللغة
+const translations = {
+  de: {
+    language: 'English',
+    title: 'Ich baue Software, die für Sie arbeitet.',
+    subtitle: 'Moderne Web- & KI-Lösungen für Ihr Projekt',
+    cta: 'Jetzt Projekt starten',
+    servicesTitle: 'Was ich anbiete',
+    services: [
+      { title: '🧩 Webentwicklung', desc: 'Mit modernen Tools wie Next.js, Tailwind & Vercel' },
+      { title: '⚙️ Software Integration', desc: 'Systeme verbinden – schnell, stabil, sicher' },
+      { title: '🤖 KI & Automatisierung', desc: 'Chatbots, Workflows & smarte Prozesse' }
+    ],
+    aboutTitle: 'Über mich',
+    about: 'Ich bin Anis Alkredi, erfahrener Software-Ingenieur mit über 10 Jahren internationaler Erfahrung. Mein Fokus liegt auf durchdachten, umsetzbaren digitalen Lösungen für Unternehmen – mit Stil und Effizienz.',
+    contactTitle: 'Bereit zu starten?',
+    contactDescription: 'Lassen Sie uns Ihr Projekt gemeinsam umsetzen.',
+    sendMessage: 'Nachricht senden'
+  },
+  en: {
+    language: 'Deutsch',
+    title: 'I build software that works for you.',
+    subtitle: 'Modern Web & AI solutions for your project',
+    cta: 'Start Your Project',
+    servicesTitle: 'What I offer',
+    services: [
+      { title: '🧩 Web Development', desc: 'Using modern tools like Next.js, Tailwind & Vercel' },
+      { title: '⚙️ Software Integration', desc: 'Connecting systems – fast, stable, secure' },
+      { title: '🤖 AI & Automation', desc: 'Chatbots, workflows & smart processes' }
+    ],
+    aboutTitle: 'About me',
+    about: 'I’m Anis Alkredi, a software engineer with 10+ years of international experience. I focus on thoughtful, executable digital solutions – with style and efficiency.',
+    contactTitle: 'Ready to begin?',
+    contactDescription: 'Let’s build your next solution together.',
+    sendMessage: 'Send Message'
+  }
+};
+
+const nameSquares = ['A', 'L', 'K', 'R', 'E', 'D', 'I'];
+
+export default function Home() {
+  const [lang, setLang] = useState<'de' | 'en'>('de');
+  const [darkMode, setDarkMode] = useState(false);
+  const t = translations[lang];
+
+  return (
+    <main className={`min-h-screen px-6 py-12 font-inter transition-colors relative overflow-hidden ${darkMode ? 'bg-[#0d1117] text-white' : 'bg-white text-black'}`}>
+      <div className="absolute inset-0 -z-10">
+        {darkMode ? (
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0d1117] to-[#1a1f2e]" />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#e0f7fa] via-white to-[#f0f4ff]" />
+        )}
+      </div>
+
+      <div className="fixed top-8 left-8 flex gap-1 z-50">
+        {nameSquares.map((char, i) => (
+          <div
+            key={i}
+            className={`w-9 h-9 md:w-10 md:h-10 rounded-[4px] shadow flex items-center justify-center text-lg md:text-xl font-bold ${i === 0 ? 'bg-[repeating-linear-gradient(135deg,_#ffffff_0px,_#ffffff_2px,_#000000_2px,_#000000_4px)] text-black' : 'bg-white text-black'}`}
+          >
+            {char}
+          </div>
+        ))}
+      </div>
+
+      <div className="fixed top-8 right-8 flex items-center gap-3 z-50">
+        <button
+          onClick={() => setLang(lang === 'de' ? 'en' : 'de')}
+          className="px-3 py-2 text-sm rounded bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 transition"
+        >
+          {t.language}
+        </button>
+        <div
+          onClick={() => setDarkMode(!darkMode)}
+          className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition ${darkMode ? 'justify-end bg-white/10' : 'justify-start bg-black/10'}`}
+        >
+          <div className="w-6 h-6 bg-white rounded-full shadow-md transition" />
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto space-y-28 md:space-y-32">
+        <section className="pt-20 space-y-6 text-left">
+          <motion.h1 className="text-5xl md:text-6xl font-extrabold" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            {t.title}
+          </motion.h1>
+          <motion.p className="text-xl" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}>
+            {t.subtitle}
+          </motion.p>
+          <motion.button className="mt-4 bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-bold px-6 py-3 rounded-full shadow-md transition" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.5, duration: 0.4 }}>
+            {t.cta}
+          </motion.button>
+        </section>
+
+        <section className="space-y-8">
+          <h2 className="text-2xl font-semibold text-center border-b border-black/10 dark:border-white/20 pb-2">
+            {t.servicesTitle}
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {t.services.map((s, i) => (
+              <div key={i} className="bg-white dark:bg-[#111827] border dark:border-lime-400/20 p-6 rounded-xl shadow-sm hover:shadow-lg hover:ring-2 hover:ring-lime-400 transition">
+                <h3 className="text-lg font-bold mb-1 text-black dark:text-white">{s.title}</h3>
+                <p className="text-sm text-black dark:text-white">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="max-w-3xl mx-auto text-center space-y-4">
+          <h2 className="text-2xl font-semibold border-b border-black/10 dark:border-white/20 pb-2">
+            {t.aboutTitle}
+          </h2>
+          <p className="text-base leading-relaxed dark:text-white">
+            {t.about}
+          </p>
+        </section>
+
+        <section className="bg-white dark:bg-[#111827] border dark:border-lime-400/20 p-8 rounded-xl shadow-xl space-y-6 text-center">
+          <h2 className="text-2xl font-bold text-black dark:text-white">{t.contactTitle}</h2>
+          <p className="text-black dark:text-white">{t.contactDescription}</p>
+          <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+            <input
+              type="text"
+              placeholder="Email or Message..."
+              className="flex-1 px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40"
+            />
+            <button className="bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-semibold px-4 py-2 rounded">
+              {t.sendMessage}
+            </button>
+          </div>
+        </section>
+
+        <footer className="text-center text-sm text-black/40 dark:text-white/60 mt-10">
+          &copy; {new Date().getFullYear()} Alkredi. All rights reserved.
+        </footer>
+      </div>
+    </main>
+  );
+}
