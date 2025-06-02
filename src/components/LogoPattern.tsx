@@ -32,6 +32,7 @@ function HatchLine({ start, end, delay }: HatchLineProps) {
   });
 
   return (
+    // @ts-ignore – لتجاوز خطأ TypeScript عند استخدام line من three.js
     <line ref={ref} geometry={geometry}>
       <lineBasicMaterial attach="material" color="#00ffff" transparent opacity={0.6} />
     </line>
