@@ -1,9 +1,9 @@
+// ✅ LogoPattern.tsx (نسخة متوافقة مع Vercel بدون أخطاء)
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 
-// خط فردي مع وميض وتأخير + حركة بسيطة
 type HatchLineProps = {
   start: THREE.Vector3;
   end: THREE.Vector3;
@@ -42,6 +42,7 @@ function HatchLine({ start, end, delay }: HatchLineProps) {
       </line>
 
       {/* توهج خلف الخط */}
+      {/* @ts-ignore */}
       <line geometry={geometry}>
         <lineBasicMaterial attach="material" color="#00ffff" transparent opacity={0.1} linewidth={6.0} />
       </line>
@@ -49,7 +50,6 @@ function HatchLine({ start, end, delay }: HatchLineProps) {
   );
 }
 
-// العنصر الرئيسي
 export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale?: number; position?: [number, number, number] }) {
   const lines = [];
   const spacing = 0.3;
@@ -80,7 +80,7 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale
         <meshBasicMaterial color="#00ffff" opacity={0.02} transparent />
       </mesh>
 
-      {/* الحرف A الأساسي – بسيط وناعم */}
+      {/* الحرف A */}
       <Text
         position={[0, 0, 0.02]}
         fontSize={3.2}
@@ -91,7 +91,6 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale
         A
       </Text>
 
-      {/* الخطوط */}
       {lines}
     </group>
   );
