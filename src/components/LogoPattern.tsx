@@ -1,7 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
 
+// خط فردي مع وميض وتأخير + حركة بسيطة
 type HatchLineProps = {
   start: THREE.Vector3;
   end: THREE.Vector3;
@@ -22,29 +24,33 @@ function HatchLine({ start, end, delay }: HatchLineProps) {
     return () => clearTimeout(timeout);
   }, [delay]);
 
-  const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
-
   useFrame(() => {
     if (ref.current) {
       const mat = ref.current.material as THREE.LineBasicMaterial;
-      mat.opacity = 0.5 + 0.3 * Math.sin(Date.now() * 0.001 + delay / 100);
+      mat.opacity = 0.4 + 0.4 * Math.sin((Date.now() + delay) * 0.001);
     }
   });
 
+  const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+
   return (
-    // @ts-ignore – لتجاوز خطأ TypeScript عند استخدام line من three.js
-    <line ref={ref} geometry={geometry}>
-      <lineBasicMaterial attach="material" color="#00ffff" transparent opacity={0.6} />
-    </line>
+    <>
+      {/* الخط الأساسي */}
+      {/* @ts-ignore */}
+      <line ref={ref} geometry={geometry}>
+        <lineBasicMaterial attach="material" color="#00e4ff" transparent opacity={0.6} linewidth={2.4} />
+      </line>
+
+      {/* توهج خلف الخط */}
+      <line geometry={geometry}>
+        <lineBasicMaterial attach="material" color="#00ffff" transparent opacity={0.1} linewidth={6.0} />
+      </line>
+    </>
   );
 }
 
-type LogoPatternProps = {
-  scale?: number;
-  position?: [number, number, number];
-};
-
-export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: LogoPatternProps) {
+// العنصر الرئيسي
+export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale?: number; position?: [number, number, number] }) {
   const lines = [];
   const spacing = 0.3;
   const rows = 12;
@@ -68,6 +74,24 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: LogoPat
 
   return (
     <group scale={[scale, scale, scale]} position={position}>
+      {/* توهج ناعم داخل المربع */}
+      <mesh position={[0, 0, -0.01]}>
+        <planeGeometry args={[cols * spacing, rows * spacing]} />
+        <meshBasicMaterial color="#00ffff" opacity={0.02} transparent />
+      </mesh>
+
+      {/* الحرف A الأساسي – بسيط وناعم */}
+      <Text
+        position={[0, 0, 0.02]}
+        fontSize={3.2}
+        color="#fefefe"
+        anchorX="center"
+        anchorY="middle"
+      >
+        A
+      </Text>
+
+      {/* الخطوط */}
       {lines}
     </group>
   );

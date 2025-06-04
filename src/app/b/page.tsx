@@ -12,7 +12,7 @@ const ThreeCanvas = dynamic(() => import('@/components/ThreeCanvas'), { ssr: fal
 const translations = {
   de: {
     language: 'English',
-    title: 'Ihre Vision als zuverlässige digitale Lösung',
+    title: 'Ich baue Software, die für Sie arbeitet.',
     subtitle: 'Moderne Web- & KI-Lösungen für Ihr Projekt',
     cta: 'Jetzt Projekt starten',
     servicesTitle: 'Was ich anbiete',
@@ -29,7 +29,7 @@ const translations = {
   },
   en: {
     language: 'Deutsch',
-    title: 'Shaping your vision with digital solutions.',
+    title: 'I build software that works for you.',
     subtitle: 'Modern Web & AI solutions for your project',
     cta: 'Start Your Project',
     servicesTitle: 'What I offer',
@@ -138,8 +138,7 @@ export default function Home() {
       )}
 
        <div className="relative z-10 max-w-6xl mx-auto space-y-28 md:space-y-32">
-        <section className="pt-20 grid md:grid-cols-[1.3fr_1.1fr] sm:gap-4 md:gap-2 items-center">
-
+        <section className="pt-20 grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6 text-left">
             <motion.h1 className="font-extrabold tracking-tight text-[clamp(2rem,10vw,4rem)]" {...fadeUp}>
               {t.title}
