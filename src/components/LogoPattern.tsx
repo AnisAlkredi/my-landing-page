@@ -82,7 +82,7 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale
 
       {/* الحرف A */}
       <Text
-        position={[0, 0, 0.02]}
+        position={[-0.5, 0, 0.02]}
         fontSize={3.2}
         color="#fefefe"
         anchorX="center"

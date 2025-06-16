@@ -14,6 +14,7 @@ const translations = {
     language: 'English',
     title: 'Ihre Vision als zuverlässige digitale Lösung',
     subtitle: 'Moderne Web- & KI-Lösungen für Ihr Projekt',
+
     cta: 'Jetzt Projekt starten',
     servicesTitle: 'Was ich anbiete',
     services: [
@@ -138,7 +139,7 @@ export default function Home() {
       )}
 
        <div className="relative z-10 max-w-6xl mx-auto space-y-28 md:space-y-32">
-        <section className="pt-20 grid md:grid-cols-[1.3fr_1.1fr] sm:gap-4 md:gap-2 items-center">
+        <section className="pt-20 grid md:grid-cols-[1.5fr_1.1fr] sm:gap-4 md:gap-2 items-center">
 
           <div className="space-y-6 text-left">
             <motion.h1 className="font-extrabold tracking-tight text-[clamp(2rem,10vw,4rem)]" {...fadeUp}>
@@ -193,22 +194,35 @@ export default function Home() {
         </motion.section>
 
         <motion.section id="contact" className="bg-white dark:bg-[#111827] border dark:border-lime-400/20 p-8 rounded-xl shadow-xl space-y-6 text-center" {...fadeUp}>
-          <h2 className="text-2xl font-bold text-black dark:text-white">{t.contactTitle}</h2>
-          <p className="text-gray-600 dark:text-gray-300">{t.contactDescription}</p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-            <input
-              type="text"
-              placeholder="Email or Message..."
-              className="flex-1 px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
-            />
-            <button
-              onClick={() => alert(lang === 'de' ? 'Nachricht gesendet!' : 'Message sent!')}
-              className="bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-semibold px-4 py-2 rounded shadow-md"
-            >
-              {t.sendMessage}
-            </button>
-          </div>
-        </motion.section>
+        <h2 className="text-2xl font-bold text-black dark:text-white">{t.contactTitle}</h2>
+        <p className="text-gray-600 dark:text-gray-300">{t.contactDescription}</p>
+        <form
+          action="https://formspree.io/f/xdkzzywd"
+          method="POST"
+          className="flex flex-col gap-4 max-w-xl mx-auto"
+        >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="Your email"
+            className="px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
+          />
+          <textarea
+            name="message"
+            required
+            placeholder="Your message..."
+            rows={4}
+            className="px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-semibold px-4 py-2 rounded shadow-md"
+          >
+            {t.sendMessage}
+          </button>
+        </form>
+      </motion.section>
 
         <footer className="text-center text-sm  dark:text-white/50 mt-10 space-y-2">
           <div>&copy; {new Date().getFullYear()} Alkredi. All rights reserved.</div>
@@ -218,21 +232,27 @@ export default function Home() {
           </div>
         </footer>
 
-        <section id="impressum" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-20 px-4">
+       <section id="impressum" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-20 px-4">
           <h2 className="text-lg font-bold mb-2">Impressum</h2>
           <p>
+            Angaben gemäß § 5 TMG:<br />
             Anis Alkredi<br />
             Sonnenstraße 11<br />
-            83052 Brückmühl<br />
-            Email: info@alkredi.com<br />
-            Verantwortlich für den Inhalt: Anis Alkredi
+            83052 Brückmühl, Deutschland<br />
+            Telefon: +49 176 57766182<br />
+            E-Mail: <a href="mailto:anis.alkredi@gmail.com" className="underline text-blue-500">anis.alkredi@gmail.com</a><br />
+            Tätigkeit: Freiberufliche Nebentätigkeit als IT-Berater und Entwickler gemäß § 19 UStG (Kleinunternehmerregelung, keine Umsatzsteuer).<br />
+            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Anis Alkredi
           </p>
         </section>
 
         <section id="datenschutz" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-12 pb-24 px-4">
           <h2 className="text-lg font-bold mb-2">Datenschutzerklärung</h2>
           <p>
-            Diese Website speichert keine personenbezogenen Daten ohne Ihre ausdrückliche Zustimmung. Bei Nutzung des Kontaktformulars werden Ihre Angaben zur Bearbeitung gespeichert. Es erfolgt keine Weitergabe an Dritte. Ihre Rechte auf Auskunft, Berichtigung und Löschung Ihrer Daten bleiben unberührt.
+            Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Diese Website verwendet keine Cookies und speichert keine personenbezogenen Daten ohne Ihre ausdrückliche Zustimmung.<br /><br />
+            Beim Ausfüllen des Kontaktformulars werden Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und direkt an die im Impressum genannte E-Mail-Adresse (anis.alkredi@gmail.com) übermittelt. Es erfolgt keine Speicherung oder Weitergabe an Dritte.<br /><br />
+            Diese Website ist auf der Plattform „Vercel“ gehostet. Dabei können serverseitige Logs durch Vercel verarbeitet werden (z.B. IP-Adresse, Browsertyp, Zugriffszeitpunkt), die ausschließlich zur Sicherstellung des technischen Betriebs verwendet werden. Es erfolgt keine personenbezogene Auswertung durch den Seitenbetreiber.<br /><br />
+            Ihre Rechte gemäß DSGVO (Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch) bleiben unberührt. Sie erreichen uns unter den im Impressum angegebenen Kontaktdaten.
           </p>
         </section>
       </div>
