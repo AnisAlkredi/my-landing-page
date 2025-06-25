@@ -1,19 +1,20 @@
-// ✅ V6.6 — تحسين بصري: Scroll Indicator بالأعلى + الكود كامل بدون اختصار
+// ✅ V6.9 — تطبيق جميع التحسينات الأخيرة + تفعيل الأقسام كاملة بدون اختصار
 'use client';
-
-import { useState, Suspense, useRef, useEffect } from 'react';
+import { useState, Suspense, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Wand2, Code2, Bot } from 'lucide-react';
+import { Wand2, Code2, Bot, ArrowUp, Languages,Globe2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import LogoPattern from '@/components/LogoPattern';
 
 const ThreeCanvas = dynamic(() => import('@/components/ThreeCanvas'), { ssr: false });
 
-const translations = {  de: {
+const translations = {
+  de: {
     language: 'English',
-    title: 'Ich baue Software, die für Sie arbeitet.',
+    title: 'Ihre Vision als zuverlässige digitale Lösung',
     subtitle: 'Moderne Web- & KI-Lösungen für Ihr Projekt',
+
     cta: 'Jetzt Projekt starten',
     servicesTitle: 'Was ich anbiete',
     services: [
@@ -29,7 +30,7 @@ const translations = {  de: {
   },
   en: {
     language: 'Deutsch',
-    title: 'I build software that works for you.',
+    title: 'Shaping your vision with digital solutions.',
     subtitle: 'Modern Web & AI solutions for your project',
     cta: 'Start Your Project',
     servicesTitle: 'What I offer',
@@ -43,15 +44,21 @@ const translations = {  de: {
     contactTitle: 'Ready to begin?',
     contactDescription: 'Let’s build your next solution together.',
     sendMessage: 'Send Message'
-  }};
+  }
+};
 
 const nameSquares = ['A', 'L', 'K', 'R', 'E', 'D', 'I'];
 
 export default function Home() {
   const [lang, setLang] = useState<'de' | 'en'>('de');
   const [darkMode, setDarkMode] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const t = translations[lang];
   const icons = [<Wand2 size={20} />, <Code2 size={20} />, <Bot size={20} />];
+
+  const { scrollYProgress, scrollY } = useScroll();
+
+  scrollY.onChange((y) => setShowScrollTop(y > 400));
 
   const fadeUp = {
     initial: { opacity: 0, y: 40 },
@@ -59,14 +66,9 @@ export default function Home() {
     transition: { duration: 0.6, ease: 'easeOut' }
   };
 
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ container: containerRef });
-  const scrollWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-  const translateY = useTransform(scrollYProgress, [0, 0.5], ['0px', '60px']);
-
   return (
     <main
-      ref={containerRef}
+      
       className={`min-h-screen px-6 py-12 font-sans transition-colors relative overflow-hidden tracking-tight ${darkMode ? 'bg-[#0d1117] text-white' : 'bg-[#fefefe] text-black'}`}
     >
       <Head>
@@ -74,13 +76,13 @@ export default function Home() {
         <meta name="description" content="Anis Alkredi – Webentwicklung, Automatisierung und KI-Lösungen aus Süddeutschland. Persönlich. Modern. Schnell." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
+        <meta name="robots" content="index, follow" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* ✅ Scroll Indicator */}
-      <motion.div style={{ width: scrollWidth }} className="fixed top-0 left-0 h-1 bg-[#02D6F0] z-[9999]" />
+      <motion.div style={{ scaleX: scrollYProgress }} className="fixed top-0 left-0 right-0 h-[3px] origin-left bg-[#02D6F0] z-[999]" />
 
-      {/* ✅ خلفية Parallax */}
-      <motion.div className="absolute inset-0 -z-10" style={{ translateY }}>
+      <motion.div className="absolute inset-0 -z-10">
         {darkMode ? (
           <div className="absolute inset-0 bg-gradient-to-b from-[#0d1117] to-[#1a1f2e]" />
         ) : (
@@ -89,7 +91,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff66_1px,transparent_1px)] bg-[size:18px_18px] opacity-50 dark:opacity-30 pointer-events-none" />
       </motion.div>
 
-     <div className="fixed top-8 left-8 flex gap-1 z-50">
+      <div className="fixed top-8 left-8 flex gap-1 z-50">
         {nameSquares.map((char, i) => (
           <motion.div
             key={i}
@@ -102,23 +104,43 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="fixed top-8 right-8 flex items-center gap-3 z-50">
-        <button
-          onClick={() => setLang(lang === 'de' ? 'en' : 'de')}
-          className="px-3 py-2 text-sm rounded bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 transition"
-        >
-          {t.language}
-        </button>
-        <div
-          onClick={() => setDarkMode(!darkMode)}
-          className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition ${darkMode ? 'justify-end bg-white/10' : 'justify-start bg-black/10'}`}
-        >
-          <div className="w-6 h-6 bg-white rounded-full shadow-md transition" />
-        </div>
-      </div>
+     <div className="fixed top-6 right-6 flex items-center gap-3 z-50">
+  {/* زر اللغة بأيقونة 🌐 */}
+ <button
+  onClick={() => setLang(lang === 'de' ? 'en' : 'de')}
+  className="w-10 h-10 rounded-full bg-[#00e4ff1a] hover:bg-[#00e4ff33] flex items-center justify-center transition shadow-md"
+  title={t.language}
+>
+  <Globe2 className="w-5 h-5 text-[#00e4ff] opacity-80 hover:opacity-100 transition" />
+</button>
 
-      <div className="relative z-10 max-w-6xl mx-auto space-y-28 md:space-y-32">
-        <section className="pt-20 grid md:grid-cols-2 gap-12 items-center">
+
+
+
+  {/* زر التبديل بين الوضع الليلي والنهاري */}
+  <div
+    onClick={() => setDarkMode(!darkMode)}
+    className={`w-14 h-8 flex items-center rounded-full p-1 cursor-pointer transition shadow-inner ${
+      darkMode ? 'justify-end bg-white/10' : 'justify-start bg-black/10'
+    }`}
+  >
+    <div className="w-6 h-6 bg-white rounded-full shadow-lg transition-all duration-300" />
+  </div>
+</div>
+
+
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-50 bg-[#02D6F0] hover:bg-[#0cf] text-black p-3 rounded-full shadow-lg transition"
+        >
+          <ArrowUp size={20} />
+        </button>
+      )}
+
+       <div className="relative z-10 max-w-6xl mx-auto space-y-28 md:space-y-32">
+        <section className="pt-20 grid md:grid-cols-[1.5fr_1.1fr] sm:gap-4 md:gap-2 items-center">
+
           <div className="space-y-6 text-left">
             <motion.h1 className="font-extrabold tracking-tight text-[clamp(2rem,10vw,4rem)]" {...fadeUp}>
               {t.title}
@@ -172,24 +194,37 @@ export default function Home() {
         </motion.section>
 
         <motion.section id="contact" className="bg-white dark:bg-[#111827] border dark:border-lime-400/20 p-8 rounded-xl shadow-xl space-y-6 text-center" {...fadeUp}>
-          <h2 className="text-2xl font-bold text-black dark:text-white">{t.contactTitle}</h2>
-          <p className="text-gray-600 dark:text-gray-300">{t.contactDescription}</p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-            <input
-              type="text"
-              placeholder="Email or Message..."
-              className="flex-1 px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
-            />
-            <button
-              onClick={() => alert(lang === 'de' ? 'Nachricht gesendet!' : 'Message sent!')}
-              className="bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-semibold px-4 py-2 rounded shadow-md"
-            >
-              {t.sendMessage}
-            </button>
-          </div>
-        </motion.section>
+        <h2 className="text-2xl font-bold text-black dark:text-white">{t.contactTitle}</h2>
+        <p className="text-gray-600 dark:text-gray-300">{t.contactDescription}</p>
+        <form
+          action="https://formspree.io/f/xdkzzywd"
+          method="POST"
+          className="flex flex-col gap-4 max-w-xl mx-auto"
+        >
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="Your email"
+            className="px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
+          />
+          <textarea
+            name="message"
+            required
+            placeholder="Your message..."
+            rows={4}
+            className="px-4 py-2 rounded bg-white dark:bg-[#0f172a] text-black dark:text-white dark:placeholder-lime-300 border dark:border-lime-400/40 shadow-sm"
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-[#02D6F0] hover:bg-[#38BDF8] text-black font-semibold px-4 py-2 rounded shadow-md"
+          >
+            {t.sendMessage}
+          </button>
+        </form>
+      </motion.section>
 
-        <footer className="text-center text-sm text-black/40 dark:text-white/50 mt-10 space-y-2">
+        <footer className="text-center text-sm  dark:text-white/50 mt-10 space-y-2">
           <div>&copy; {new Date().getFullYear()} Alkredi. All rights reserved.</div>
           <div className="space-x-4">
             <a href="#impressum" className="underline hover:text-[#02D6F0] transition">Impressum</a>
@@ -197,24 +232,32 @@ export default function Home() {
           </div>
         </footer>
 
-        <section id="impressum" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-20 px-4">
+       <section id="impressum" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-20 px-4">
           <h2 className="text-lg font-bold mb-2">Impressum</h2>
           <p>
+            Angaben gemäß § 5 TMG:<br />
             Anis Alkredi<br />
-            Musterstraße 1<br />
-            83052 Brückmühl<br />
-            Email: info@alkredi.com<br />
-            Verantwortlich für den Inhalt: Anis Alkredi
+            Sonnenstraße 11<br />
+            83052 Brückmühl, Deutschland<br />
+            Telefon: +49 176 57766182<br />
+            E-Mail: <a href="mailto:anis.alkredi@gmail.com" className="underline text-blue-500">anis.alkredi@gmail.com</a><br />
+            Tätigkeit: Freiberufliche Nebentätigkeit als IT-Berater und Entwickler gemäß § 19 UStG (Kleinunternehmerregelung, keine Umsatzsteuer).<br />
+            Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV: Anis Alkredi
           </p>
         </section>
 
         <section id="datenschutz" className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto pt-12 pb-24 px-4">
           <h2 className="text-lg font-bold mb-2">Datenschutzerklärung</h2>
           <p>
-            Diese Website speichert keine personenbezogenen Daten ohne Ihre ausdrückliche Zustimmung. Bei Nutzung des Kontaktformulars werden Ihre Angaben zur Bearbeitung gespeichert. Es erfolgt keine Weitergabe an Dritte. Ihre Rechte auf Auskunft, Berichtigung und Löschung Ihrer Daten bleiben unberührt.
+            Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Diese Website verwendet keine Cookies und speichert keine personenbezogenen Daten ohne Ihre ausdrückliche Zustimmung.<br /><br />
+            Beim Ausfüllen des Kontaktformulars werden Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und direkt an die im Impressum genannte E-Mail-Adresse (anis.alkredi@gmail.com) übermittelt. Es erfolgt keine Speicherung oder Weitergabe an Dritte.<br /><br />
+            Diese Website ist auf der Plattform „Vercel“ gehostet. Dabei können serverseitige Logs durch Vercel verarbeitet werden (z.B. IP-Adresse, Browsertyp, Zugriffszeitpunkt), die ausschließlich zur Sicherstellung des technischen Betriebs verwendet werden. Es erfolgt keine personenbezogene Auswertung durch den Seitenbetreiber.<br /><br />
+            Ihre Rechte gemäß DSGVO (Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch) bleiben unberührt. Sie erreichen uns unter den im Impressum angegebenen Kontaktdaten.
           </p>
         </section>
       </div>
     </main>
   );
 }
+
+  
