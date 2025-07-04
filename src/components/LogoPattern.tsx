@@ -1,8 +1,8 @@
 // ✅ LogoPattern.tsx (نسخة متوافقة مع Vercel بدون أخطاء)
-import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
-import { useFrame } from '@react-three/fiber';
-import { Text } from '@react-three/drei';
+import React, { useRef, useEffect } from "react";
+import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
+import { Text } from "@react-three/drei";
 
 type HatchLineProps = {
   start: THREE.Vector3;
@@ -38,19 +38,37 @@ function HatchLine({ start, end, delay }: HatchLineProps) {
       {/* الخط الأساسي */}
       {/* @ts-ignore */}
       <line ref={ref} geometry={geometry}>
-        <lineBasicMaterial attach="material" color="#00e4ff" transparent opacity={0.6} linewidth={2.4} />
+        <lineBasicMaterial
+          attach="material"
+          color="#00e4ff"
+          transparent
+          opacity={0.6}
+          linewidth={2.4}
+        />
       </line>
 
       {/* توهج خلف الخط */}
       {/* @ts-ignore */}
       <line geometry={geometry}>
-        <lineBasicMaterial attach="material" color="#00ffff" transparent opacity={0.1} linewidth={6.0} />
+        <lineBasicMaterial
+          attach="material"
+          color="#00ffff"
+          transparent
+          opacity={0.1}
+          linewidth={6.0}
+        />
       </line>
     </>
   );
 }
 
-export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale?: number; position?: [number, number, number] }) {
+export default function LogoPattern({
+  scale = 1,
+  position = [0, 0, 0],
+}: {
+  scale?: number;
+  position?: [number, number, number];
+}) {
   const lines = [];
   const spacing = 0.3;
   const rows = 12;
@@ -61,14 +79,28 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale
   for (let y = -rows / 2; y < rows / 2; y++) {
     for (let x = -cols / 2; x < cols / 2; x++) {
       const offset = new THREE.Vector3(x * spacing, y * spacing, 0);
-      const start = offset.clone().add(
-        new THREE.Vector3(-Math.cos(angle) * length / 2, -Math.sin(angle) * length / 2, 0)
-      );
-      const end = offset.clone().add(
-        new THREE.Vector3(Math.cos(angle) * length / 2, Math.sin(angle) * length / 2, 0)
-      );
+      const start = offset
+        .clone()
+        .add(
+          new THREE.Vector3(
+            (-Math.cos(angle) * length) / 2,
+            (-Math.sin(angle) * length) / 2,
+            0
+          )
+        );
+      const end = offset
+        .clone()
+        .add(
+          new THREE.Vector3(
+            (Math.cos(angle) * length) / 2,
+            (Math.sin(angle) * length) / 2,
+            0
+          )
+        );
       const delay = (x + cols / 2 + y + rows / 2) * 40;
-      lines.push(<HatchLine key={`${x},${y}`} start={start} end={end} delay={delay} />);
+      lines.push(
+        <HatchLine key={`${x},${y}`} start={start} end={end} delay={delay} />
+      );
     }
   }
 
@@ -77,7 +109,7 @@ export default function LogoPattern({ scale = 1, position = [0, 0, 0] }: { scale
       {/* توهج ناعم داخل المربع */}
       <mesh position={[0, 0, -0.01]}>
         <planeGeometry args={[cols * spacing, rows * spacing]} />
-        <meshBasicMaterial color="#00ffff" opacity={0.02} transparent />
+        <meshBasicMaterial color="#00ffff" opacity={0.03} transparent />
       </mesh>
 
       {/* الحرف A */}
