@@ -110,6 +110,40 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>{t.title} | Anis Alkredi</title>
+        <meta
+          name="description"
+          content={
+            lang === "de"
+              ? "Web- & KI-Lösungen ab 490€ – Landing Pages, Chatbots & smarte Automatisierung für Selbstständige & kleine Unternehmen."
+              : "Web & AI solutions from €490 – Landing pages, chatbots, and smart automation for freelancers & small teams."
+          }
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Anis Alkredi" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Anis Alkredi",
+              url: "https://alkredi.de",
+              jobTitle: "Freelance IT Consultant & Web Developer",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Brückmühl",
+                postalCode: "83052",
+                addressCountry: "DE",
+              },
+              email: "mailto:anis.alkredi@gmail.com",
+              sameAs: ["https://www.linkedin.com/in/anisalkredi/"],
+            }),
+          }}
+        />
+      </Head>
+
       <motion.div className="fixed top-8 left-8 flex gap-1 z-50">
         {nameSquares.map((char, i) => (
           <motion.div
