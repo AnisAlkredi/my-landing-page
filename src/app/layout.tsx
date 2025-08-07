@@ -1,8 +1,5 @@
 export const metadata: Metadata = {
-  title: {
-    default: "ALKREDI – Web & AI Solutions for Freelancers",
-    template: "%s | ALKREDI",
-  },
+  title: "ALKREDI – Web & AI Solutions for Freelancers",
   description:
     "Landing Pages, Chatbots & Smart Consulting ab 490 € – für Freelancer & kleine Unternehmen in Deutschland.",
   keywords: [
